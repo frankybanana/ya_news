@@ -4,7 +4,7 @@ from pytest_django.asserts import assertRedirects, assertFormError
 from django.urls import reverse
 
 from news.forms import WARNING
-from news.models import Comment, News
+from news.models import Comment
 
 from http import HTTPStatus
 
@@ -53,7 +53,6 @@ def test_user_cant_delete_comment_of_another_user(not_author_client, comment_id_
     url = reverse('news:delete', args=comment_id_for_args)
     response = not_author_client.post(url)
     assert response.status_code == HTTPStatus.NOT_FOUND
-    comments_count = Comment.objects.count()
     assert Comment.objects.count() == 1
 
 
@@ -71,7 +70,6 @@ def test_author_can_edit_comment(author_client, comment_id_for_args, news_id_for
 def test_user_cant_edit_comment_of_another_user(not_author_client, comment_id_for_args, form_data, comment):
     url = reverse('news:edit', args=comment_id_for_args)
     response = not_author_client.post(url, form_data)
-    # Проверяем, что вернулась 404 ошибка.
     assert response.status_code == HTTPStatus.NOT_FOUND
     comment.refresh_from_db()
     assert comment.text == 'Текст комментария'
