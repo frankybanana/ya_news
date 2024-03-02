@@ -7,7 +7,7 @@ from django.test.client import Client
 # Импортируем модель заметки, чтобы создать экземпляр.
 from news.models import Comment, News
 
-from news.forms import BAD_WORDS, WARNING
+from news.forms import BAD_WORDS
 
 @pytest.fixture
 # Используем встроенную фикстуру для модели пользователей django_user_model.
