@@ -7,6 +7,8 @@ from django.test.client import Client
 # Импортируем модель заметки, чтобы создать экземпляр.
 from news.models import Comment, News
 
+from news.forms import BAD_WORDS, WARNING
+
 @pytest.fixture
 # Используем встроенную фикстуру для модели пользователей django_user_model.
 def author(django_user_model):
@@ -58,10 +60,25 @@ def form_data():
 
 @pytest.fixture
 # Фикстура запрашивает другую фикстуру создания заметки.
-def id_for_args(comment):
+def comment_id_for_args(comment):
     # И возвращает кортеж, который содержит slug заметки.
     # На то, что это кортеж, указывает запятая в конце выражения.
     return (comment.id,)
+
+
+@pytest.fixture
+# Фикстура запрашивает другую фикстуру создания заметки.
+def news_id_for_args(news):
+    # И возвращает кортеж, который содержит slug заметки.
+    # На то, что это кортеж, указывает запятая в конце выражения.
+    return (news.id,)
+
+
+@pytest.fixture
+def bad_words_data():
+    return {
+        'text': f'Какой-то текст, {BAD_WORDS[0]}, еще текст'
+    }
 
 
 
