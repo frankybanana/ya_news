@@ -37,7 +37,6 @@ class TestCommentCreation(TestCase):
         self.assertEqual(comment.news, self.news)
         self.assertEqual(comment.author, self.user)
 
-
     def test_user_cant_use_bad_words(self):
         bad_words_data = {'text': f'Какой-то текст, {BAD_WORDS[0]}, еще текст'}
         response = self.auth_client.post(self.url, data=bad_words_data)

@@ -19,10 +19,12 @@ def author(django_user_model):
 def not_author(django_user_model):
     return django_user_model.objects.create(username='Не автор')
 
+
 @pytest.fixture
 def client(author):
     client = Client()
     return client
+
 
 @pytest.fixture
 def author_client(author):
@@ -46,6 +48,7 @@ def news(author):
     )
     return news
 
+
 @pytest.fixture
 def comment(news, author):
     comment = Comment.objects.create(
@@ -61,6 +64,7 @@ def form_data():
     return {
         'text': 'Текст комментария'
     }
+
 
 @pytest.fixture
 def comment_id_for_args(comment):
@@ -78,6 +82,7 @@ def bad_words_data():
         'text': f'Какой-то текст, {BAD_WORDS[0]}, еще текст'
     }
 
+
 @pytest.fixture
 def all_news():
     today = datetime.today()
@@ -91,6 +96,7 @@ def all_news():
     ]
     News.objects.bulk_create(all_news)
 
+
 @pytest.fixture
 def new_comments(news, author):
     now = timezone.now()
@@ -100,8 +106,3 @@ def new_comments(news, author):
         )
         comment.created = now + timedelta(days=index)
         comment.save()
-
-
-
-
-

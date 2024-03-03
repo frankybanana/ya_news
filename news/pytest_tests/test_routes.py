@@ -10,11 +10,11 @@ from pytest_django.asserts import assertRedirects
     'name',
     ('news:home', 'users:login', 'users:logout', 'users:signup')
 )
-
 def test_pages_availability(client, name):
     url = reverse(name)
     response = client.get(url)
     assert response.status_code == HTTPStatus.OK
+
 
 @pytest.mark.parametrize(
     'parametrized_client, expected_status',
@@ -23,7 +23,6 @@ def test_pages_availability(client, name):
         (pytest.lazy_fixture('author_client'), HTTPStatus.OK)
     ),
 )
-
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     'name',
@@ -51,6 +50,3 @@ def test_redirects(client, name, args):
     expected_url = f'{login_url}?next={url}'
     response = client.get(url)
     assertRedirects(response, expected_url)
-
-
-
